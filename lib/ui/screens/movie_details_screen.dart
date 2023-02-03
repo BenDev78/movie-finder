@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_finder/models/movie.dart';
 import 'package:movie_finder/repositories/data_repository.dart';
 import 'package:movie_finder/ui/widgets/movie/movie_info.dart';
@@ -55,9 +56,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     height: 220,
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.only(bottom: 10),
-                    child: YoutubeVideoPLayer(
-                      videoKey: newMovie!.videos!.first,
-                    ),
+                    child: newMovie!.videos!.isEmpty
+                        ? Center(
+                            child: Text(
+                              'Pas de vidéo pour ce film',
+                              style: GoogleFonts.poppins(color: Colors.white),
+                            ),
+                          )
+                        : YoutubeVideoPLayer(
+                            videoKey: newMovie!.videos!.first,
+                          ),
                   ),
                   MovieInfo(movie: newMovie!)
                 ],

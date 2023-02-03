@@ -5,12 +5,20 @@ class Movie {
   final String name;
   final String description;
   final String? posterPath;
+  final List<String>? genres;
+  final double? voteAverage;
+  final String? releaseDate;
+  final List<String>? videos;
 
   const Movie({
     required this.id,
     required this.name,
     required this.description,
     this.posterPath,
+    this.genres,
+    this.voteAverage,
+    this.releaseDate,
+    this.videos,
   });
 
   Movie copyWith({
@@ -18,21 +26,29 @@ class Movie {
     String? name,
     String? description,
     String? posterPath,
+    List<String>? genres,
+    double? voteAverage,
+    String? releaseDate,
+    List<String>? videos
   }) {
     return Movie(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
       posterPath: posterPath ?? this.posterPath,
+      genres: genres ?? this.genres,
+      voteAverage: voteAverage ?? this.voteAverage,
+      releaseDate: releaseDate ?? this.releaseDate,
+      videos: videos ?? this.videos
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this.id,
-      'name': this.name,
-      'description': this.description,
-      'posterPath': this.posterPath,
+      'id': id,
+      'name': name,
+      'description': description,
+      'posterPath': posterPath,
     };
   }
 
@@ -48,5 +64,18 @@ class Movie {
   String posterURL() {
     API api = API();
     return api.baseImageURL + posterPath!;
+  }
+
+  String reformatGenres() {
+    String categories = '';
+    for (int i = 0; i < genres!.length; i++) {
+      if (i == genres!.length -1) {
+        categories = categories + genres![i]; 
+      } else {
+        categories = '$categories ${genres![i]}, ';
+      }
+    }
+
+    return categories;
   }
 }

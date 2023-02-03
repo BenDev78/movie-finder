@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movie_finder/repositories/data_repository.dart';
-import 'package:movie_finder/ui/screens/home_screen.dart';
+import 'package:movie_finder/ui/screens/loading_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (context) => DataRepository(), child: const MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => DataRepository()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: const LoadingScreen(),
     );
   }
 }

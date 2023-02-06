@@ -1,9 +1,11 @@
+import 'package:movie_finder/models/actor.dart';
 import 'package:movie_finder/services/api.dart';
 
 class Movie {
   final int id;
   final String name;
   final String description;
+  final List<Actor>? casting;
   final String? posterPath;
   final List<String>? genres;
   final double? voteAverage;
@@ -14,6 +16,7 @@ class Movie {
     required this.id,
     required this.name,
     required this.description,
+    this.casting,
     this.posterPath,
     this.genres,
     this.voteAverage,
@@ -21,26 +24,26 @@ class Movie {
     this.videos,
   });
 
-  Movie copyWith({
-    int? id,
-    String? name,
-    String? description,
-    String? posterPath,
-    List<String>? genres,
-    double? voteAverage,
-    String? releaseDate,
-    List<String>? videos
-  }) {
+  Movie copyWith(
+      {int? id,
+      String? name,
+      String? description,
+      List<Actor>? casting,
+      String? posterPath,
+      List<String>? genres,
+      double? voteAverage,
+      String? releaseDate,
+      List<String>? videos}) {
     return Movie(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      posterPath: posterPath ?? this.posterPath,
-      genres: genres ?? this.genres,
-      voteAverage: voteAverage ?? this.voteAverage,
-      releaseDate: releaseDate ?? this.releaseDate,
-      videos: videos ?? this.videos
-    );
+        id: id ?? this.id,
+        name: name ?? this.name,
+        casting: casting ?? this.casting,
+        description: description ?? this.description,
+        posterPath: posterPath ?? this.posterPath,
+        genres: genres ?? this.genres,
+        voteAverage: voteAverage ?? this.voteAverage,
+        releaseDate: releaseDate ?? this.releaseDate,
+        videos: videos ?? this.videos);
   }
 
   Map<String, dynamic> toMap() {
@@ -69,8 +72,8 @@ class Movie {
   String reformatGenres() {
     String categories = '';
     for (int i = 0; i < genres!.length; i++) {
-      if (i == genres!.length -1) {
-        categories = categories + genres![i]; 
+      if (i == genres!.length - 1) {
+        categories = categories + genres![i];
       } else {
         categories = '$categories ${genres![i]}, ';
       }

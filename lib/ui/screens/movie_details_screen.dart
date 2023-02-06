@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_finder/models/movie.dart';
 import 'package:movie_finder/repositories/data_repository.dart';
+import 'package:movie_finder/ui/widgets/movie/movie_casting.dart';
 import 'package:movie_finder/ui/widgets/movie/movie_info.dart';
 import 'package:movie_finder/ui/widgets/youtube_video_player.dart';
 import 'package:movie_finder/utils/constants.dart';
@@ -67,7 +68,15 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             videoKey: newMovie!.videos!.first,
                           ),
                   ),
-                  MovieInfo(movie: newMovie!)
+                  MovieInfo(movie: newMovie!),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(
+                      newMovie!.description,
+                      style: GoogleFonts.poppins(color: Colors.white),
+                    ),
+                  ),
+                  MovieCasting(movie: newMovie!)
                 ],
               ),
             ),

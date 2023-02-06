@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:movie_finder/models/movie.dart';
 import 'package:movie_finder/services/api.dart';
 
+import '../models/actor.dart';
+
 class ApiService {
   final API api = API();
   final Dio dio = Dio();
@@ -73,37 +75,33 @@ class ApiService {
   }
 
   Future<Movie> getMovie({required Movie movie}) async {
-    Response response = await getData('movie/${movie.id}');
+    Response response = await getData('movie/${movie.id}', params: {'append_to_response': 'videos,credits'});
 
     if (200 == response.statusCode) {
       Map<String, dynamic> data = response.data;
+
       var genres = data['genres'] as List;
       List<String> genresList = genres.map((item) {
         return item['name'] as String;
       }).toList();
 
-      Movie newMovie = movie.copyWith(
-          genres: genresList,
-          releaseDate: data['release_date'],
-          voteAverage: data['vote_average']);
+      List<Actor> casting = data['credits']['cast'].map<Actor>((dynamic map) {
+        return Actor.fromMap(map);
+      }).toList();
 
-      return newMovie;
-    }
-
-    throw response;
-  }
-
-  Future<Movie> getMovieVideos({required Movie movie}) async {
-    Response response = await getData('/movie/${movie.id}/videos');
-
-    if (200 == response.statusCode) {
-      Map data = response.data;
-      data['results'];
-      List<String> videos = data['results'].map<String>((json) {
+      List<String> videos = data['videos']['results'].map<String>((json) {
         return json['key'] as String;
       }).toList();
 
-      return movie.copyWith(videos: videos);
+      Movie newMovie = movie.copyWith(
+          genres: genresList,
+          releaseDate: data['release_date'],
+          voteAverage: data['vote_average'],
+          casting: casting,
+          videos: videos,
+        );
+
+      return newMovie;
     }
 
     throw response;

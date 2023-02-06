@@ -25,8 +25,7 @@ class DataRepository with ChangeNotifier {
       _popularMovieList.addAll(movies);
       _popularMoviePageIndex++;
       notifyListeners();
-    } on Response catch (response) {
-      print("ERROR: ${response.statusCode}");
+    } on Response {
       rethrow;
     }
   }
@@ -38,8 +37,7 @@ class DataRepository with ChangeNotifier {
       _nowPlayingMovieList.addAll(movies);
       _nowPlayingMoviePageIndex++;
       notifyListeners();
-    } on Response catch (response) {
-      print("ERROR: ${response.statusCode}");
+    } on Response {
       rethrow;
     }
   }
@@ -51,8 +49,7 @@ class DataRepository with ChangeNotifier {
       _upcomingMovieList.addAll(movies);
       _upcomingMoviePageIndex++;
       notifyListeners();
-    } on Response catch (response) {
-      print("ERROR: ${response.statusCode}");
+    } on Response {
       rethrow;
     }
   }
@@ -60,11 +57,9 @@ class DataRepository with ChangeNotifier {
   Future<Movie> getMovie({required Movie movie}) async {
     try {
       Movie newMovie = await apiService.getMovie(movie: movie);
-      newMovie = await apiService.getMovieVideos(movie: newMovie);
 
       return newMovie;
-    } on Response catch (response) {
-      print("ERROR: ${response.statusCode}");
+    } on Response {
       rethrow;
     }
   }

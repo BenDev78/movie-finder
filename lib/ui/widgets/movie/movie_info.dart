@@ -28,24 +28,27 @@ class MovieInfo extends StatelessWidget {
                 color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w500),
           ),
         ),
-        Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-              margin: const EdgeInsets.only(right: 5),
-              decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(5)),
-              child: Text(
-                movie.releaseDate!.substring(0, 4),
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 12,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                margin: const EdgeInsets.only(right: 5),
+                decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(5)),
+                child: Text(
+                  movie.releaseDate!.substring(0, 4),
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
               ),
-            ),
-            MovieRecommandationText(voteAverage: movie.voteAverage!)
-          ],
+              MovieRecommandationText(voteAverage: movie.voteAverage!)
+            ],
+          ),
         )
       ],
     );

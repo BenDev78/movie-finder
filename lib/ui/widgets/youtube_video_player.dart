@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_finder/utils/constants.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubeVideoPLayer extends StatefulWidget {
@@ -34,7 +35,15 @@ class _YoutubeVideoPLayerState extends State<YoutubeVideoPLayer> {
   @override
   Widget build(BuildContext context) {
     return YoutubePlayer(
-      controller: _controller
+      controller: _controller,
+      progressColors: ProgressBarColors(
+          handleColor: kPrimaryColor,
+          playedColor: kPrimaryColor,
+          backgroundColor: kPrimaryColor.withOpacity(.3)),
+      onEnded: (YoutubeMetaData meta) {
+        _controller.play();
+        _controller.pause();
+      },
     );
   }
 }
